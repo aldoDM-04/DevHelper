@@ -1,3 +1,4 @@
+/* src/assets/base.css (Version corregida) */
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
@@ -19,52 +20,38 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  /* Define las variables semánticas pero NO las apliques aquí directamente al body */
+  --color-background-light: var(--vt-c-white);
+  --color-background-soft-light: var(--vt-c-white-soft);
+  --color-background-mute-light: var(--vt-c-white-mute);
+  --color-border-light: var(--vt-c-divider-light-2);
+  --color-border-hover-light: var(--vt-c-divider-light-1);
+  --color-heading-light: var(--vt-c-text-light-1);
+  --color-text-light: var(--vt-c-text-light-1);
+
+  --color-background-dark: var(--vt-c-black);
+  --color-background-soft-dark: var(--vt-c-black-soft);
+  --color-background-mute-dark: var(--vt-c-black-mute);
+  --color-border-dark: var(--vt-c-divider-dark-2);
+  --color-border-hover-dark: var(--vt-c-divider-dark-1);
+  --color-heading-dark: var(--vt-c-text-dark-1);
+  --color-text-dark: var(--vt-c-text-dark-2);
 }
 
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-}
-
-/*   *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    margin: 0;
-    font-weight: normal;
+/* Puedes mantener el resto de las reglas globales que no interfieran con Tailwind */
+/* Por ejemplo, el reseteo de box-sizing, o fuentes */
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
 } */
 
+/* Elimina las reglas de background y color para body. Déjaselas a Tailwind. */
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
   line-height: 1.6;
   font-family:
     Inter,

@@ -1,12 +1,12 @@
 // src/types/index.ts
-// Estas interfaces deben coincidir con los modelos de FastAPI (Pydantic)
 
 export interface Message {
   id: string;
   chat_id: string;
   sender: 'user' | 'tutor';
   text: string;
-  timestamp: string; // ISO datetime string
+  timestamp: string;
+  selectedReaction?: 'like' | 'dislike'; 
 }
 
 export interface Chat {
@@ -14,11 +14,28 @@ export interface Chat {
   user_id: string;
   title: string;
   messages: Message[];
-  created_at: string; // ISO datetime string
-  updated_at: string; // ISO datetime string
+  created_at: string;
+  updated_at: string;
 }
 
-export interface User { // Modelo simple de usuario para el futuro
+export interface User {
   id: string;
-  username: string;
+  username: string; // Puede ser el email
+  email: string;
+}
+
+// --- Nuevos tipos para Autenticación ---
+
+export interface LoginCredentials {
+    email: string;
+    password: string;
+}
+
+export interface RegisterCredentials extends LoginCredentials {
+    // Puedes añadir más campos si es necesario, ej: username
+}
+
+export interface TokenResponse {
+    access_token: string;
+    token_type: string;
 }

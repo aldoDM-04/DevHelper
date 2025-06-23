@@ -8,5 +8,5 @@ import {RouterView /*, RouterLink*/} from 'vue-router'
 </template>
 
 <style scoped>
-/* Elimina todos los estilos scoped originales */
+
 </style>

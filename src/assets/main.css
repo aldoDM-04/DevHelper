@@ -1,45 +1,547 @@
-/* @import './base.css'; */
+/* src/assets/main.css */
+
+/* Importa las directivas de Tailwind para base, componentes y utilidades */
+/* Esto generará las clases básicas de Tailwind sin el dark:media query */
 @import 'tailwindcss';
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* Definición de variables CSS para los colores de Tailwind */
+/* Esto hace que sea más fácil referenciarlos en tus reglas personalizadas */
+:root {
+    /* Colores del Modo Claro (por defecto) */
+    --color-bg-white: #ffffff;
+    --color-bg-gray-50: #f9fafb;
+    --color-bg-gray-100: #f3f4f6;
+    --color-bg-purple-100: #ede9fe;
+    --color-text-gray-800: #1f2937;
+    --color-text-gray-700: #374151;
+    --color-text-gray-600: #4b5563;
+    --color-text-gray-500: #6b7280;
+    --color-text-purple-800: #5b21b6;
+    --color-text-purple-700: #6d28d9;
+    --color-border-gray-200: #e5e7eb;
+    --color-border-gray-100: #f3f4f6;
+    --color-hover-gray-200: #e5e7eb;
+    --color-purple-600: #9333ea;
+    --color-purple-200: #ddd6fe;
+    --color-purple-700: #7e22ce;
+    --color-purple-300: #c4b5fd;
+    --color-blue-500: #3b82f6;
 
-/* Asegura que los elementos raíz ocupen todo el espacio */
+    /* Scrollbar Light Mode */
+    --scrollbar-track-light: #f8fafc; /* bg-gray-50 */
+    --scrollbar-thumb-light: #e2e8f0; /* bg-gray-200 */
+    --scrollbar-thumb-hover-light: #cbd5e1; /* bg-gray-300 */
+
+    /* Scrollbar Light Mode (ChatListSidebar) */
+    --scrollbar-track-list-light: transparent;
+    --scrollbar-thumb-list-light: #d1d5db; /* bg-gray-300 */
+    --scrollbar-thumb-list-hover-light: #9ca3af; /* bg-gray-400 */
+}
+
+/* Modo Oscuro: Sobrescribe las variables cuando la clase 'dark' está presente en el html */
+html.dark {
+    --color-bg-white: #1f2937; /* Reemplazo para bg-white en dark mode */
+    --color-bg-gray-50: #1f2937; /* Reemplazo para bg-gray-50 en dark mode */
+    --color-bg-gray-100: #1f2937; /* Reemplazo para bg-gray-100 en dark mode */
+    --color-bg-purple-100: #4c1d95; /* Reemplazo para bg-purple-100 en dark mode */
+    --color-text-gray-800: #f3f4f6; /* text-gray-100 */
+    --color-text-gray-700: #d1d5db; /* text-gray-200 */
+    --color-text-gray-600: #9ca3af; /* text-gray-400 */
+    --color-text-gray-500: #9ca3af; /* text-gray-400 */
+    --color-text-purple-800: #c4b5fd; /* text-purple-300 */
+    --color-text-purple-700: #a78bfa; /* text-purple-400 */
+    --color-border-gray-200: #374151; /* border-gray-700 */
+    --color-border-gray-100: #374151; /* border-gray-700 */
+    --color-hover-gray-200: #374151; /* hover:bg-gray-700 */
+    --color-purple-600: #7e22ce; /* dark:bg-purple-700 */
+    --color-purple-200: #5b21b6; /* dark:bg-purple-700 */
+    --color-purple-700: #7e22ce; /* dark:text-purple-300 */
+    --color-purple-300: #a78bfa; /* dark:text-purple-400 */
+    --color-blue-500: #60a5fa; /* dark:text-blue-400 */
+
+    /* Scrollbar Dark Mode */
+    --scrollbar-track-dark: #1f2937; /* dark:bg-gray-800 */
+    --scrollbar-thumb-dark: #4b5563; /* dark:bg-gray-600 */
+    --scrollbar-thumb-hover-dark: #6b7280; /* dark:bg-gray-500 */
+
+    /* Scrollbar Dark Mode (ChatListSidebar) */
+    --scrollbar-track-list-dark: #1f2937; /* dark:bg-gray-800 */
+    --scrollbar-thumb-list-dark: #4b5563; /* dark:bg-gray-600 */
+    --scrollbar-thumb-list-hover-dark: #6b7280; /* dark:bg-gray-500 */
+}
+
+/* Estilos globales para html, body y #app */
 html,
 body,
 #app {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  /* Opcional: overflow-hidden para evitar scrollbars en el nivel de la ventana */
-  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Mantener el scroll global controlado */
+    /* Asegúrate de que el fondo del body responda al tema */
+    background-color: var(--color-bg-white); /* Usa la variable para el fondo principal */
+    color: var(--color-text-gray-800); /* Usa la variable para el color de texto principal */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
 
-/* a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+/* ------------------------------------------------------------- */
+/* ESTILOS PERSONALIZADOS PARA COMPONENTES (Modo Claro por defecto) */
+/* ------------------------------------------------------------- */
+
+/* ChatWindow.vue */
+.chat-window-main {
+    background-color: var(--color-bg-white);
+    color: var(--color-text-gray-800);
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.chat-header {
+    background-color: var(--color-bg-gray-50);
+    border-color: var(--color-border-gray-200);
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.chat-header-title {
+    color: var(--color-text-gray-800);
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */
+.chat-header-messages-count {
+    color: var(--color-text-gray-500);
+}
+
+.chat-theme-button-container {
+    color: var(--color-text-gray-500);
+}
+
+.chat-theme-button-light-hover:hover {
+    background-color: var(--color-hover-gray-200);
+}
+
+.chat-theme-button-light-active {
+    color: var(--color-blue-500);
+}
+
+.chat-theme-button-dark-active {
+    color: var(--color-purple-600);
+}
+
+.chat-options-button {
+    color: var(--color-text-gray-500);
+}
+.chat-options-button:hover {
+    background-color: var(--color-hover-gray-200);
+    color: var(--color-text-gray-700);
+}
+
+.chat-messages-container-placeholder {
+    color: var(--color-text-gray-500);
+}
+
+.chat-message-tutor-bubble {
+    background-color: var(--color-bg-gray-100);
+    color: var(--color-text-gray-800);
+}
+
+.chat-message-tutor-name {
+    color: var(--color-text-purple-700);
+}
+
+.chat-message-timestamp-tutor {
+    color: var(--color-text-gray-500);
+}
+
+.chat-input-container {
+    background-color: var(--color-bg-white);
+    border-color: var(--color-border-gray-200);
+}
+
+.chat-textarea {
+    background-color: var(--color-bg-gray-50);
+    border-color: var(--color-border-gray-300); /* No hay var para 300, lo defino aquí */
+    color: var(--color-text-gray-800);
+}
+.chat-textarea:focus {
+    border-color: transparent; /* Tailwind default focus border-transparent */
+    box-shadow: 0 0 0 2px #a78bfa; /* focus:ring-purple-500 */
+}
+
+.chat-send-button {
+    background-color: var(--color-purple-600);
+}
+.chat-send-button:hover {
+    background-color: var(--color-purple-700); /* hover:bg-purple-700 */
+}
+
+.chat-no-active-message-area {
+    background-color: var(--color-bg-white);
+    border-color: var(--color-border-gray-200);
+    color: var(--color-text-gray-400);
+}
+
+.chat-footer-disclaimer {
+    background-color: var(--color-bg-white);
+    border-color: var(--color-border-gray-100);
+    color: var(--color-text-gray-400);
+}
+
+/* ChatListSidebar.vue */
+.chat-sidebar-main {
+    background-color: var(--color-bg-gray-100);
+}
+
+.chat-sidebar-header {
+    border-color: var(--color-border-gray-200);
+}
+
+.chat-sidebar-header-title {
+    color: var(--color-text-gray-800);
+}
+
+.chat-sidebar-new-chat-button {
+    background: linear-gradient(to top left, #4f46e5, #9333ea); /* from-blue-600 to-purple-800 */
+    color: white;
+}
+.chat-sidebar-new-chat-button:hover {
+    background: white; /* hover:from-white hover:to-white */
+    color: var(--color-text-purple-800);
+}
+
+.chat-sidebar-placeholder-text {
+    color: var(--color-text-gray-500);
+}
+.chat-sidebar-error-text {
+    color: #ef4444; /* text-red-500 */
+}
+
+.chat-list-item {
+    color: var(--color-text-gray-700);
+}
+.chat-list-item:hover {
+    background-color: var(--color-hover-gray-200);
+    color: var(--color-text-gray-900);
+}
+
+.chat-list-item-active {
+    background-color: var(--color-purple-200);
+    color: var(--color-text-purple-800);
+}
+
+.chat-sidebar-footer {
+    border-color: var(--color-border-gray-200);
+}
+
+.chat-sidebar-info-button {
+    background-color: var(--color-bg-purple-100);
+    color: var(--color-text-purple-700);
+}
+.chat-sidebar-info-button:hover {
+    background-color: #f3e8ff; /* hover:bg-purple-200/70 */
+}
+
+.chat-sidebar-info-text {
+    color: var(--color-text-gray-600);
+}
+
+
+
+
+/* ButtonSidebar.vue */
+.button-sidebar-main {
+    background-color: #1f2937; /* bg-gray-800 en light mode */
+    color: white;
+}
+
+.sidebar-button-group-hover:hover {
+    background-color: var(--color-bg-white); /* hover:bg-white */
+}
+
+.sidebar-button-icon {
+    color: white; /* text-white-400 */
+}
+
+.sidebar-button-icon-blue:hover {
+    color: #2563eb; /* group-hover:text-blue-600 */
+}
+.sidebar-button-icon-green:hover {
+    color: #16a34a; /* group-hover:text-green-600 */
+}
+.sidebar-button-icon-red:hover {
+    color: #dc2626; /* group-hover:text-red-600 */
+}
+.sidebar-button-icon-orange:hover {
+    color: #ea580c; /* group-hover:text-orange-600 */
+}
+.sidebar-button-icon-yellow:hover {
+    color: #eab308; /* group-hover:text-yellow-500 */
+}
+.sidebar-button-icon-purple:hover {
+    color: #9333ea; /* group-hover:text-purple-600 */
+}
+
+/* ------------------------------------------------------------- */
+/* ESTILOS PERSONALIZADOS PARA COMPONENTES (Modo Oscuro) */
+/* ------------------------------------------------------------- */
+
+html.dark .chat-window-main {
+    background-color: #111827; /* dark:bg-gray-900 */
+    color: #f3f4f6; /* dark:text-gray-100 */
+}
+
+html.dark .chat-header {
+    background-color: #1f2937; /* dark:bg-gray-800 */
+    border-color: #374151; /* dark:border-gray-700 */
+}
+
+html.dark .chat-header-title {
+    color: #f3f4f6; /* dark:text-gray-100 */
+}
+
+html.dark .chat-header-messages-count {
+    color: #9ca3af; /* dark:text-gray-400 */
+}
+
+html.dark .chat-theme-button-container {
+    color: #9ca3af; /* dark:text-gray-400 */
+}
+
+html.dark .chat-theme-button-light-hover:hover {
+    background-color: #374151; /* dark:hover:bg-gray-700 */
+}
+
+html.dark .chat-theme-button-light-active {
+    color: #60a5fa; /* dark:text-blue-400 */
+}
+
+html.dark .chat-theme-button-dark-active {
+    color: #a78bfa; /* dark:text-purple-400 */
+}
+
+html.dark .chat-options-button {
+    color: #9ca3af; /* dark:text-gray-400 */
+}
+html.dark .chat-options-button:hover {
+    background-color: #374151; /* dark:hover:bg-gray-700 */
+    color: #e5e7eb; /* dark:hover:text-gray-200 */
+}
+
+html.dark .chat-messages-container-placeholder {
+    color: #9ca3af; /* dark:text-gray-400 */
+}
+
+html.dark .chat-message-tutor-bubble {
+    background-color: #374151; /* dark:bg-gray-700 */
+    color: #f3f4f6; /* dark:text-gray-100 */
+}
+
+html.dark .chat-message-tutor-name {
+    color: #c4b5fd; /* dark:text-purple-300 */
+}
+
+html.dark .chat-message-timestamp-tutor {
+    color: #d1d5db; /* dark:text-gray-300 */
+}
+
+html.dark .chat-input-container {
+    background-color: #1f2937; /* dark:bg-gray-800 */
+    border-color: #374151; /* dark:border-gray-700 */
+}
+
+html.dark .chat-textarea {
+    background-color: #374151; /* dark:bg-gray-700 */
+    border-color: #4b5563; /* dark:border-gray-600 */
+    color: #f3f4f6; /* dark:text-gray-100 */
+}
+html.dark .chat-textarea:focus {
+    box-shadow: 0 0 0 2px #a78bfa; /* dark:focus:ring-purple-400 */
+}
+
+html.dark .chat-send-button {
+    background-color: #7e22ce; /* dark:bg-purple-700 */
+}
+html.dark .chat-send-button:hover {
+    background-color: #9333ea; /* dark:hover:bg-purple-600 */
+}
+
+html.dark .chat-no-active-message-area {
+    background-color: #1f2937; /* dark:bg-gray-800 */
+    border-color: #374151; /* dark:border-gray-700 */
+    color: #9ca3af; /* dark:text-gray-500 */
+}
+
+html.dark .chat-footer-disclaimer {
+    background-color: #1f2937; /* dark:bg-gray-800 */
+    border-color: #374151; /* dark:border-gray-700 */
+    color: #9ca3af; /* dark:text-gray-500 */
+}
+
+/* ChatListSidebar.vue */
+html.dark .chat-sidebar-main {
+    background-color: #1f2937; /* dark:bg-gray-800 */
+}
+
+html.dark .chat-sidebar-header {
+    border-color: #374151; /* dark:border-gray-700 */
+}
+
+html.dark .chat-sidebar-header-title {
+    color: #f3f4f6; /* dark:text-gray-100 */
+}
+
+html.dark .chat-sidebar-new-chat-button {
+    background: linear-gradient(to top left, #1d4ed8, #6d28d9); /* dark:from-blue-700 dark:to-purple-900 */
+}
+html.dark .chat-sidebar-new-chat-button:hover {
+    background: #374151; /* dark:hover:from-gray-700 dark:hover:to-gray-700 */
+    color: #a78bfa; /* dark:hover:text-purple-400 */
+}
+
+html.dark .chat-sidebar-placeholder-text {
+    color: #9ca3af; /* dark:text-gray-400 */
+}
+html.dark .chat-sidebar-error-text {
+    color: #f87171; /* dark:text-red-400 */
+}
+
+html.dark .chat-list-item {
+    color: #e5e7eb; /* dark:text-gray-200 */
+}
+html.dark .chat-list-item:hover {
+    background-color: #374151; /* dark:hover:bg-gray-700 */
+    color: #f3f4f6; /* dark:hover:text-gray-100 */
+}
+
+html.dark .chat-list-item-active {
+    background-color: #5b21b6; /* dark:bg-purple-700 */
+    color: white; /* dark:text-white */
+}
+
+html.dark .chat-sidebar-footer {
+    border-color: #374151; /* dark:border-gray-700 */
+}
+
+html.dark .chat-sidebar-info-button {
+    background-color: #4c1d95; /* dark:bg-purple-900 */
+    color: #c4b5fd; /* dark:text-purple-300 */
+}
+html.dark .chat-sidebar-info-button:hover {
+    background-color: #6b21a8; /* dark:hover:bg-purple-800/70 */
+}
+
+html.dark .chat-sidebar-info-text {
+    color: #9ca3af; /* dark:text-gray-300 */
+}
+
+/* ButtonSidebar.vue */
+html.dark .button-sidebar-main {
+    background-color: #030712; /* dark:bg-gray-950 */
+    color: #e5e7eb; /* dark:text-gray-200 */
+}
+
+html.dark .sidebar-button-group-hover:hover {
+    background-color: #374151; /* dark:hover:bg-gray-700 */
+}
+
+html.dark .sidebar-button-icon {
+    color: #d1d5db; /* dark:text-gray-300 */
+}
+
+html.dark .sidebar-button-icon-blue:hover {
+    color: #60a5fa; /* dark:group-hover:text-blue-400 */
+}
+html.dark .sidebar-button-icon-green:hover {
+    color: #4ade80; /* dark:group-hover:text-green-400 */
+}
+html.dark .sidebar-button-icon-red:hover {
+    color: #f87171; /* dark:group-hover:text-red-400 */
+}
+html.dark .sidebar-button-icon-orange:hover {
+    color: #fb923c; /* dark:group-hover:text-orange-400 */
+}
+html.dark .sidebar-button-icon-yellow:hover {
+    color: #facc15; /* dark:group-hover:text-yellow-300 */
+}
+html.dark .sidebar-button-icon-purple:hover {
+    color: #a78bfa; /* dark:group-hover:text-purple-400 */
+}
+
+/* Scrollbar de ChatWindow.vue (ahora en main.css) */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-light);
+    border-radius: 10px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-light);
+    border-radius: 10px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-light);
+}
+
+html.dark .overflow-y-auto::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-dark);
+}
+html.dark .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-dark);
+}
+html.dark .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-dark);
+}
+
+/* Scrollbar de ChatListSidebar.vue (ahora en main.css) */
+.chat-sidebar-main .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-list-light);
+}
+.chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-list-light);
+    border-radius: 10px;
+}
+.chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-list-hover-light);
+}
+
+html.dark .chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-list-dark);
+}
+html.dark .chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-list-dark);
+}
+html.dark .chat-sidebar-main .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-list-hover-dark);
+}
+
+/* Typing Indicator (se mueve aquí desde ChatWindow.vue) */
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background-color: #9ca3af; /* text-gray-400 */
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 1px;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+html.dark .typing-indicator span {
+    background-color: #d1d5db; /* A light gray for dark mode */
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: -0.2s;
+}
+.typing-indicator span:nth-child(3) {
+    animation-delay: -0.4s;
+}
+
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
