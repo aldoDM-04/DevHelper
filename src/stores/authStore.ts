@@ -19,15 +19,13 @@ export const useAuthStore = defineStore('auth', () => {
         api.setAuthHeader(newToken); // Configura el header para futuras peticiones
 
         try {
-            // Aquí podrías tener un endpoint /api/users/me para obtener datos del usuario
-            // Por ahora, simularemos que el email se puede extraer o se obtiene tras el login
-            // Para una app real, el endpoint /me es la mejor práctica.
-            // Decodificar el token para obtener el email (solo para UI, NUNCA para seguridad)
+            // para definir un endpoint /api/users/me para obtener datos del usuario
+            // o or ahora, el email se puede extraer o se obtiene tras el login
+            // Decodificar el token para obtener el email para la interfaz
             const payload = JSON.parse(atob(newToken.split('.')[1]));
             const email = payload.sub; // 'sub' es el campo estándar para el sujeto (email)
 
-            // Suponemos un ID de usuario ficticio, ya que /me no está implementado
-            // En un caso real, /me devolvería {id, email, ...}
+            // ID de usuario simulado
             user.value = { id: 'user-from-token', username: email, email };
 
             // Cargar los chats del usuario recién autenticado
@@ -36,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
 
         } catch (error) {
             console.error("Error al obtener datos del usuario:", error);
-            await logout(); // Si falla, cerramos sesión
+            await logout(); // Si falla, se cierra la sesión
         }
     }
 
@@ -59,7 +57,7 @@ export const useAuthStore = defineStore('auth', () => {
         authError.value = null;
         try {
             await api.registerUser(credentials);
-            // Opcional: Iniciar sesión automáticamente después del registro
+            // se puede usar para iniciar sesión automáticamente después del registro
             await login({ email: credentials.email, password: credentials.password });
         } catch (error: any) {
             authError.value = error.response?.data?.detail || "Error en el registro.";
