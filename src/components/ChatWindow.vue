@@ -166,7 +166,7 @@
             <div
               v-if="message.sender === 'tutor'"
               class="flex items-center mb-1 text-xs"
-              :class="[message.sender === 'user' ? 'justify-end' : '']"
+              
             >
               <span class="font-semibold mr-2 chat-message-tutor-name" v-if="message.sender === 'tutor'"
                 >DevHelper</span
