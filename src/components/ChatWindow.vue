@@ -150,7 +150,7 @@
           ]"
         >
           <img
-            :src="message.sender === 'user' ? '/src/assets/userIcon.png' : '/src/assets/tutorIcon.png'"
+            :src="message.sender === 'user' ? imUserIcon : imTutorIcon"
             :alt="message.sender === 'user' ? 'User Icon' : 'Tutor Icon'"
             class="w-7 h-7 rounded-full flex-shrink-0 mb-0.5"
             :class="{ 'order-2': message.sender === 'user' }"
@@ -166,7 +166,7 @@
             <div
               v-if="message.sender === 'tutor'"
               class="flex items-center mb-1 text-xs"
-              
+
             >
               <span class="font-semibold mr-2 chat-message-tutor-name" v-if="message.sender === 'tutor'"
                 >DevHelper</span
@@ -236,7 +236,7 @@
         class="self-start flex items-end gap-x-2 max-w-lg xl:max-w-xl mr-auto"
       >
         <img
-          src="/src/assets/tutorIcon.png"
+          :src="imTutorIcon"
           alt="Tutor Icon"
           class="w-7 h-7 rounded-full flex-shrink-0 mb-0.5"
         />
@@ -311,6 +311,8 @@
 import { ref, watch, nextTick, onMounted } from 'vue';
 import { useChatStore } from '@/stores/chatStore';
 import { useThemeStore } from '@/stores/themeStore';
+import imTutorIcon from '../assets/tutorIcon.png';
+import imUserIcon from '../assets/userIcon.png';
 
 const store = useChatStore();
 const themeStore = useThemeStore();
